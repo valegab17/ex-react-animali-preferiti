@@ -1,0 +1,62 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>I miei animali Preferiti</title>
+    <link rel="stylesheet" href="style.css">
+
+    <!-- monto react all'interno della pagina HTML -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <!-- creazione componente react -->
+    <script type="text/babel">
+        const ReactApp = () => {
+            const animals = ['cane', 'gatto', 'cavallo']
+
+            return (
+                <>
+                    <h1>IO SONO LA TUA REACTAPP</h1>
+                    <details>
+                        <summary>Lista dei miei animali Preferiti</summary>
+                        <ul>
+                            {animals.map(animali => <li key={animali}>{animali}</li>)}
+
+                        </ul>
+                    </details>
+
+                </>
+
+            )
+        }
+    </script>
+    <script type="text/babel">
+        const {createRoot} = ReactDOM;
+        //seleziono il div nel body .lista-animali
+        const listaAnimali = document.querySelector('.lista-animali')
+        const root = createRoot(listaAnimali)
+        root.render(<ReactApp/>)
+    </script>
+</head>
+
+<body>
+    <header>
+        <h1>I miei animali Preferiti</h1>
+    </header>
+    <main>
+        <figure>
+            <img src="https://picsum.photos/400/300" alt="Immagine Casuale">
+        </figure>
+        <div class="lista-animali"></div>
+    </main>
+    <footer>
+        <p>Creato con amore da... un collega sbadato! 🐾</p>
+    </footer>
+
+</body>
+
+</html>
