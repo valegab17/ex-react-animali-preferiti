@@ -16,15 +16,32 @@
     <!-- creazione componente react -->
     <script type="text/babel">
         const ReactApp = () => {
-            const animals = ['cane', 'gatto', 'cavallo']
+            //monto useState
+            const {useState} = React;
+            
+            // Trasforma l’array animals usando useState (l’array è inizialmente vuoto).
+            const [animals, setAnimals] = useState([]);
+            const animalsChoices = ["Cane", "Gatto", "Pappagallo", "Cavallo", "Panda"];
+
+            //creo una funzione da usare nel bottone
+            function addAnimals(){
+                const randomIndex = Math.floor(Math.random() * animalsChoices.length);
+                const nuovoAnimale = animalsChoices[randomIndex];
+
+                //aggiorno lo stato creando un nuovo array con lo spread operator
+                setAnimals([...animals, nuovoAnimale]);
+            }
+
+            /* const animals = ['cane', 'gatto', 'cavallo'] */
 
             return (
                 <>
                     <h1>IO SONO LA TUA REACTAPP</h1>
+                    <button onClick={addAnimals}>Aggiungi animale</button>
                     <details>
                         <summary>Lista dei miei animali Preferiti</summary>
                         <ul>
-                            {animals.map(animali => <li key={animali}>{animali}</li>)}
+                            {animals.map((animali, index) => <li key={index}>{animali}</li>)}
 
                         </ul>
                     </details>
