@@ -15,29 +15,76 @@
 
     <!-- creazione componente react -->
     <script type="text/babel">
+        function Modal({
+
+            title,
+
+            content,
+
+            show = false,
+
+            onClose = () => { },
+            onConfirm = () => { }
+
+        }) {
+
+            return show && ReactDOM.createPortal(
+
+                <div className="modal-container">
+
+                    <div className="modal">
+
+                        <h2>{title}</h2>
+
+                        <p>{content}</p>
+
+                        <div>
+                            <button onClick={onClose}>Annulla</button>
+                            <button onClick={onConfirm}>Conferma</button>
+
+                        </div>
+
+
+                    </div>
+
+                </div>,
+
+                document.body
+
+            )
+
+        }
+
         const ReactApp = () => {
             //monto useState
-            const {useState} = React;
-            
+            const { useState } = React;
+
+
             // Trasforma l’array animals usando useState (l’array è inizialmente vuoto).
             const [animals, setAnimals] = useState([]);
             const animalsChoices = ["Cane", "Gatto", "Pappagallo", "Cavallo", "Panda"];
 
-            //creo una funzione da usare nel bottone
-            function addAnimals(){
-                const randomIndex = Math.floor(Math.random() * animalsChoices.length);
-                const nuovoAnimale = animalsChoices[randomIndex];
+            //creo un altro state show setShow
+            const [show, setShow] = useState(false);
 
-                //aggiorno lo stato creando un nuovo array con lo spread operator
-                setAnimals([...animals, nuovoAnimale]);
+            //creo un altro state
+            const [animalName, setAnimalName] = useState('')
+
+            //creo una funzione da usare nel bottone
+            function addAnimals() {
+                if(!animalName) return;
+                setAnimals(curr=> [...curr, animalName]);
+                setAnimalName('');
+                setShow(false);
+
             }
 
             /* const animals = ['cane', 'gatto', 'cavallo'] */
 
             return (
                 <>
-                    <h1>IO SONO LA TUA REACTAPP</h1>
-                    <button onClick={addAnimals}>Aggiungi animale</button>
+
+                    <button onClick={() => setShow(true)}>Aggiungi animale</button>
                     <details>
                         <summary>Lista dei miei animali Preferiti</summary>
                         <ul>
@@ -45,6 +92,21 @@
 
                         </ul>
                     </details>
+                    <Modal
+                        show={show}
+                        onClose={() => setShow(false)}
+                        onConfirm={addAnimals}
+                        title="Aggiungi animale"
+                        content={
+                            <input
+                                type="text"
+                                value={animalName}
+                                onChange = {e => setAnimalName(e.target.value)}
+
+
+                            />
+                        }
+                    />
 
                 </>
 
@@ -52,11 +114,11 @@
         }
     </script>
     <script type="text/babel">
-        const {createRoot} = ReactDOM;
+        const { createRoot } = ReactDOM;
         //seleziono il div nel body .lista-animali
         const listaAnimali = document.querySelector('.lista-animali')
         const root = createRoot(listaAnimali)
-        root.render(<ReactApp/>)
+        root.render(<ReactApp />)
     </script>
 </head>
 
